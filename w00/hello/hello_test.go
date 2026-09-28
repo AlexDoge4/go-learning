@@ -1,7 +1,7 @@
 package hello
 
 import "testing"
-
+ 
 func TestHello(t *testing.T) {
 	tests := []struct{ name, in, want string }{
 		{"с именем", "Go", "Привет, Go!"},
