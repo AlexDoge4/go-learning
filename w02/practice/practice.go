@@ -119,21 +119,51 @@ func Chunks(s []int, size int) [][]int {
 }
 
 // Задача 9. Filter
-// Новый слайс из элементов, для которых keep вернула true. Исходный s не изменять.
+// Новый слайс из элементов,
+// для которых keep вернула true.
+// Исходный s не изменять.
 func Filter(s []int, keep func(int) bool) []int {
-	return nil // TODO
+	var answer []int
+	for i, _ := range s {
+		if keep(s[i]) {
+			answer = append(answer, s[i])
+		}
+	}
+	return answer
 }
 
 // Задача 10. Remove
-// Удаляет элемент с индексом i, сохраняя порядок, без выделения нового массива. Возвращает укороченный слайс (cap прежний). Если i вне диапазона — вернуть s без изменений.
+// Удаляет элемент с индексом i, сохраняя порядок,
+// без выделения нового массива.
+// Возвращает укороченный слайс (cap прежний).
+// Если i вне диапазона — вернуть s без изменений.
 func Remove(s []int, i int) []int {
-	return s // TODO
+	// 0 1 2 3 4 l5 c5//3
+	// 0 1 2 4 _ l4 c5
+
+	if i > len(s)-1 || i < 0 {
+		return s
+	}
+	s = append(s[:i], s[i+1:]...)
+
+	return s
 }
 
 // Задача 11. Insert
-// Вставляет v на позицию i (0 ≤ i ≤ len(s)), сдвигая остальное вправо. Возвращает новый слайс. Если i вне диапазона — вернуть s без изменений. Пример: Insert([1 2 4 5], 2, 3) → [1 2 3 4 5].
+// Вставляет v на позицию i (0 ≤ i ≤ len(s)),
+// сдвигая остальное вправо. Возвращает новый слайс.
+// Если i вне диапазона — вернуть s без изменений.
+// Пример: Insert([1 2 4 5], 2, 3) → [1 2 3 4 5].
 func Insert(s []int, i int, v int) []int {
-	return s // TODO
+	if i < 0 || i > len(s) {
+		return s
+	}
+	tail := make([]int, len(s[i:]))
+	copy(tail, s[i:])
+
+	answer := append(s[:i], v)
+	answer = append(answer, tail...)
+	return answer
 }
 
 // Задача 12. Unique
