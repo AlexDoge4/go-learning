@@ -7,49 +7,115 @@ package practice
 // Задача 1. Sum
 // Возвращает сумму элементов. Для пустого и nil-слайса — 0.
 func Sum(s []int) int {
-	return 0 // TODO
+	sum := 0
+	for _, v := range s {
+		sum += v
+	}
+
+	return sum // TODO
 }
 
 // Задача 2. Last
 // Возвращает последний элемент и true. Если слайс пуст — 0, false. Не должна паниковать.
 func Last(s []int) (int, bool) {
-	return 0, false // TODO
+
+	if len(s) == 0 {
+		return 0, false
+	}
+	return s[len(s)-1], true // TODO
 }
 
 // Задача 3. Swap
 // Меняет местами элементы s[i] и s[j] на месте.
 func Swap(s []int, i, j int) {
-	// TODO
+	// 0 1 2 3 4
+	// l5
+	//5
+	if ((len(s) - 1) < i) || ((len(s) - 1) < j) {
+		return
+	}
+	s[i], s[j] = s[j], s[i]
 }
 
 // Задача 4. FirstN
-// Первые n элементов без копирования (подслайс). Если n > len(s) — весь s. Если n ≤ 0 — пустой слайс. Изменение результата должно быть видно в s.
+// Первые n элементов без копирования (подслайс).
+// Если n > len(s) — весь s.
+// Если n ≤ 0 — пустой слайс.
+// Изменение результата должно быть видно в s.
 func FirstN(s []int, n int) []int {
-	return nil // TODO
+	if n <= 0 {
+		return s[0:0]
+	} else if n > len(s) {
+		return s[:len(s)]
+	}
+
+	return s[:n]
 }
 
 // Задача 5. Clone
 // Независимая копия: изменение копии не должно менять s. Clone(nil) возвращает nil.
 func Clone(s []int) []int {
-	return nil // TODO
+	if s == nil {
+		var answer []int
+		return answer
+	}
+	answer := make([]int, len(s), cap(s))
+	copy(answer, s)
+	return answer
 }
 
 // Задача 6. Reverse
 // Разворачивает слайс на месте (без нового слайса).
 func Reverse(s []int) {
-	// TODO
+	// 0 1 2 3
+	//l4
+	temp := 0
+	for i := 0; i < len(s)/2; i++ {
+		temp = s[i]
+		s[i] = s[len(s)-1-i]
+		s[len(s)-1-i] = temp
+	}
 }
 
 // Задача 7. Middle
-// Всё, кроме первого и последнего элемента, без копирования. Для слайсов длиной ≤ 2 (и для nil) — пустой слайс, без паники. Пример: [1 2 3 4] → [2 3].
+// Всё, кроме первого и последнего элемента, без копирования.
+// Для слайсов длиной ≤ 2 (и для nil) — пустой слайс, без паники.
+// Пример: [1 2 3 4] → [2 3].
+
 func Middle(s []int) []int {
-	return nil // TODO
+	if len(s) <= 2 {
+		var answer []int
+		return answer
+	}
+	return s[1 : len(s)-1]
 }
 
 // Задача 8. Chunks
-// Режет s на куски длиной size (последний может быть короче). Куски — подслайсы s (память общая), но у каждого cap == len, чтобы append к куску не затирал соседний. size ≤ 0 → nil. Пример: [1 2 3 4 5 6 7], 3 → [[1 2 3] [4 5 6] [7]].
+// Режет s на куски длиной size (последний может быть короче).
+// Куски — подслайсы s (память общая), но у каждого cap == len,
+// чтобы append к куску не затирал соседний. size ≤ 0 → nil.
+// Пример: [1 2 3 4 5 6 7], 3 → [[1 2 3] [4 5 6] [7]].
 func Chunks(s []int, size int) [][]int {
-	return nil // TODO
+	if size <= 0 {
+		return nil
+	}
+
+	var length int
+	if len(s)%size == 0 {
+		length = len(s) / size
+	} else {
+		length = len(s)/size + 1
+	}
+
+	answer := make([][]int, length)
+	for i := 0; i < len(s); i += size { // шаг size
+		end := i + size // длина куска size
+		if end > len(s) {
+			end = len(s) // последний кусок короче
+		}
+		answer[i/size] = s[i:end:end] // номер куска, а не позиция
+	}
+	return answer
 }
 
 // Задача 9. Filter
